@@ -1,0 +1,24 @@
+{
+  "name": "figma-ops",
+  "version": "1.0.0",
+  "description": "Design-ops toolkit: full-page website capture and image/diagram pipelines into Figma and FigJam, built to be driven by AI agents via the Figma MCP server.",
+  "license": "MIT",
+  "author": "Harold Fandino",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haroldfandino/figma-ops.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "webshot": "node scripts/webshot.js",
+    "split": "node scripts/split-image.js",
+    "upload": "node scripts/figma-upload.js",
+    "info": "node scripts/figma-info.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.0.0",
+    "sharp": "^0.34.0"
+  }
+}

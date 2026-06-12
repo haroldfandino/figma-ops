@@ -1,0 +1,33 @@
+{
+  "$comment": "Per-project board config. Copy this next to your project (NOT into figma-ops) and point your agent context (CLAUDE.md / AGENTS.md) at it. IDs come from the board URL and get_figjam/figma-info.js.",
+  "name": "my-project-board",
+  "fileKey": "XXXXXXXXXXXXXXXXXXXXXX",
+  "url": "https://www.figma.com/board/XXXXXXXXXXXXXXXXXXXXXX/my-board",
+  "editorType": "figjam",
+  "planKey": "team::0000000000000000000",
+  "pages": {
+    "main": "0:1"
+  },
+  "style": {
+    "node": { "shape": "SQUARE", "w": 224, "h": 128, "font": "Inter Medium 16", "strokeWeight": 4, "text": "#1E1E1E" },
+    "presets": {
+      "default": { "fill": "#FFFFFF", "stroke": "#757575" },
+      "root":    { "fill": "#FFECBD", "stroke": "#FFC943" },
+      "goal":    { "fill": "#CDF4D3", "stroke": "#66D575" },
+      "muted":   { "fill": "#D9D9D9", "stroke": "#B3B3B3" },
+      "issue":   { "fill": "#FFCDC2", "stroke": "#FF7556" }
+    },
+    "sections": { "detail": "#EAE1FF", "moodboard": "#F9F9F9", "before": "#FFF5F5" },
+    "connector": { "type": "ELBOWED", "stroke": "#757575", "weight": 4, "caps": "NONE->ARROW_LINES", "dashedMeaning": "external/proposed" },
+    "titles": { "h1": "Inter Medium 64 #333333", "label": "Inter Medium 14 #757575" }
+  },
+  "layout": {
+    "imageBoxWidth": 720,
+    "moodboardColumnStep": 784,
+    "sectionGridStep": 288,
+    "spinePitch": 320
+  },
+  "inventory": {
+    "$comment": "Optional: known node IDs (diagram roots, moodboard sections). Verify with get_figjam before relying on them - users rearrange boards."
+  }
+}
