@@ -49,19 +49,37 @@ async function autoScroll(page) {
   await page.evaluate(async () => {
     await new Promise((resolve) => {
       let total = 0;
-      const step = 800;
+      const step = 700;
       const timer = setInterval(() => {
         const before = window.scrollY;
         window.scrollBy(0, step);
         total += step;
         const doc = document.scrollingElement || document.documentElement;
-        if (window.scrollY === before || total > 60000 || window.scrollY + window.innerHeight >= doc.scrollHeight - 2) {
+        if (window.scrollY === before || total > 80000 || window.scrollY + window.innerHeight >= doc.scrollHeight - 2) {
           clearInterval(timer);
           resolve();
         }
-      }, 250);
+      }, 350);
     });
   });
+}
+
+// Wait for every <img> currently in the DOM to finish loading (or error/time out).
+async function waitForImages(page, perImageTimeoutMs = 8000) {
+  await page.evaluate(async (timeoutMs) => {
+    const imgs = Array.from(document.images);
+    await Promise.all(
+      imgs.map((img) =>
+        img.complete && img.naturalWidth > 0
+          ? Promise.resolve()
+          : new Promise((res) => {
+              img.addEventListener('load', res, { once: true });
+              img.addEventListener('error', res, { once: true });
+              setTimeout(res, timeoutMs);
+            })
+      )
+    );
+  }, perImageTimeoutMs);
 }
 
 (async () => {
@@ -87,6 +105,7 @@ async function autoScroll(page) {
     if (!flags['no-scroll']) {
       await autoScroll(page);
       await new Promise((r) => setTimeout(r, 1500));
+      await waitForImages(page); // lazy-loaded images triggered by the scroll
     }
     if (!flags['keep-overlays']) {
       await page.evaluate(() => {
@@ -96,6 +115,7 @@ async function autoScroll(page) {
     }
     await page.evaluate(() => window.scrollTo(0, 0));
     await new Promise((r) => setTimeout(r, 1200));
+    await waitForImages(page); // final guard before the shot
     const out = path.join(outDir, name + '_full.png');
     await page.screenshot({ path: out, fullPage: true });
     const dims = await page.evaluate(() => {
