@@ -110,7 +110,10 @@ Prints each part's size plus the display height for a 720-wide box
    ```bash
    node scripts/figma-upload.js captures/example_p1.png "<submitUrl>"
    ```
-   The JSON response contains an `imageHash`.
+   The JSON response contains an `imageHash`. Figma rejects assets over **10MB**;
+   `figma-upload.js` handles this automatically — if the file is larger it re-encodes a
+   JPEG copy (lowering quality, then downscaling) until it fits, uploads that, and prints
+   an `[auto-jpeg]` note. Pass `--keep` to retain the generated `.upload.jpg`.
 4. **Apply the fill yourself** — on FigJam shapes the upload does *not* auto-apply:
    ```js
    const n = await figma.getNodeByIdAsync('<box id>');

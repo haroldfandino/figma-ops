@@ -40,7 +40,10 @@ URLs are **single-use and expire in 10 minutes** — don't request them until fi
 node scripts/figma-upload.js <file> "<submitUrl>"
 ```
 
-Response JSON contains `imageHash`.
+Response JSON contains `imageHash`. **10MB cap is handled for you:** if the file is larger,
+the script auto-encodes a fitting JPEG copy (progressive quality, then downscale) and
+uploads that, printing an `[auto-jpeg]` line. Dense full-width captures (>1512px wide) are
+the usual trigger. No manual compression step needed; `--keep` retains the `.upload.jpg`.
 
 ## 5. Apply the fill manually (the critical gotcha)
 
